@@ -13,5 +13,5 @@ This is an implementation of a terminal version of WORDLE in C. ANSI-C codes are
 
 ## Demo
 
-https://github.com/user-attachments/assets/a8c2795b-d9a8-48cf-ba4f-b313d688afa5
+https://github.com/user-attachments/assets/558afda0-e641-4236-84fb-4a329f686fd9
 
