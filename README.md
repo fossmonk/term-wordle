@@ -11,3 +11,7 @@ This is an implementation of a terminal version of WORDLE in C. ANSI-C codes are
 - The word list for valid guesses and answers are stored in C string arrays, this is so that once compiled the binary doesn't need another data file (like JSON/yaml) to be run
 - I have only tested this in a UNIX+BASH setup. Should work for other shells, and Windows too.
 
+## Demo
+
+https://github.com/user-attachments/assets/a8c2795b-d9a8-48cf-ba4f-b313d688afa5
+
