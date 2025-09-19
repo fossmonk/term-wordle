@@ -51,15 +51,27 @@ const char *exclaims[] = {
     "PHEWW"
 };
 
+int forced = 0;
+char * forced_word ;
+
 void wordle(void);
 void print_state(wordle_t *w);
 void print_intro(void);
 void print_outro(void);
 void update_state(wordle_t *w, char *s);
 
-int main() {
+int main(int argc, char *argv[]) {    
     srand(time(NULL));
     print_intro();
+    for(int i = 1; i < argc ; i ++)
+    { 
+      if(!strcmp(argv[i],"-f")) /*forced word*/
+      {
+        forced_word = argv[++i];
+        forced = 1;
+      }
+
+    }
     wordle();
     print_outro();
     return 0;
@@ -91,14 +103,19 @@ int previously_guessed(char *word) {
     return ret;
 }
 
-void wordle(void) {
-    // get the random word of the day
-    int idx = rand() % ANSWER_SIZE;
 
+void wordle(void) {
     // setup state
     wordle_t w;
-    w.answer = answers[idx];
+    if (forced)
+      w.answer = forced_word;
+    else 
+    { 
+      int idx = rand() % ANSWER_SIZE;
+      w.answer = answers[idx];
+    }
     w.current_row = 0;
+
 
     for(int i = 0; i < 26; i++) {
         w.kb_state[i] = UNUSED;
@@ -145,11 +162,18 @@ void wordle(void) {
 int is_yellow(wordle_t *w, char *guess, int idx) {
     int ret = 1, a_sum = 0, b_sum = 0;
     char c = guess[idx];
+    
+    //find how many instances of char c occured in this word till now 
+    for(int i =0; i<idx; i++){
+      if( c == guess[i])
+        b_sum++;
+    }
+
     for(int i = 0; i < 5; i++) {
         if(c == w->answer[i]) a_sum += 1;
-        if(c == guess[i]) b_sum += 1;
     }
-    if(a_sum == 0 || (a_sum != b_sum)) ret = 0;
+
+    if((a_sum<=b_sum)) ret = 0;
     return ret;
 }
 
